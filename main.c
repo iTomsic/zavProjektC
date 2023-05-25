@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//4 sve je u camelCase
+//6 organizirano u vise datoteka
 
 int main()
 {
