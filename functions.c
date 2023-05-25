@@ -351,7 +351,7 @@ void izlaz(KOMPONENTA* polje)
 	char uvjet[7] = { '\0' }; //12
 	scanf("%6s", uvjet);
 	if (!strcmp("OBRISI", uvjet)) {
-		remove("komponente.bin") == 0 ? printf("Izbrisali ste datoteku komponente.bin.\n") : printf("Datoteka neuspjesno izbrisani ili ona ne postoji.\n");
+		remove("komponente.bin") == 0 ? printf("Izbrisali ste datoteku komponente.bin.\n") : printf("Datoteka neuspjesno izbrisani ili ona ne postoji.\n");	//18
 		printf("\nIzlaz iz programa.\n");
 		free(polje);
 	}
