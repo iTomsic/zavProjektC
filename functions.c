@@ -325,13 +325,13 @@ void brisanjeKomponente(KOMPONENTA* polje)
 	rewind(fp);										//17
 	fseek(fp, sizeof(int), SEEK_CUR);				//17
 
-	int br = 0, trazenId;
+	int idZaBrisanje, br = 0;
 
 	printf("Unesite ID komponente koje zelite obrisati:");
-	scanf("%d", &trazenId);
+	scanf("%d", &idZaBrisanje);
 
-	for (i = 0; i < brojProizvoda; i++) {
-		if (trazenId != (polje + i)->id) {
+	for (i = 0; i < brojKomponenti; i++) {
+		if (idZaBrisanje != (polje + i)->id) {
 			fwrite((polje + i), sizeof(KOMPONENTA), 1, fp);
 			br++;
 		}
