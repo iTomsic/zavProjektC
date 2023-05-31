@@ -8,16 +8,18 @@
 
 int main()
 {
-	
-		int izbor = 1;
-		while (izbor != 999) {
-			izbor = menu();
-		}
+	printf("----------------------------------------------------------------------------------\n");
+	printf("\t\tDOBRODOSLI U APLIKACIJU SKLADISTA RACUNALNIH KOMPONENTI!\n");
+	printf("----------------------------------------------------------------------------------\n\n");
+
+	int izbor = 1;
+	while (izbor != 999) {
+		izbor = menu();
+	}
 
 
 	return 0;
 
 }
-	
-	
+
 
