@@ -4,10 +4,10 @@
 
 //3
 typedef struct komp {
+	int id;
 	int cijena;
 	char marka[50];
 	char imeKomponente[50];
-	int id;
 }KOMPONENTA;
 
 int menu();
@@ -17,8 +17,9 @@ int menuSort();
 void dodavanjeKomponente();
 void* ucitavanjeKomponente();
 void ispis(KOMPONENTA*);
+void* searchID(KOMPONENTA*);
 void* searchMarka(KOMPONENTA*);
-void* searchImeProizvoda(KOMPONENTA*);
+void* searchImeKomponente(KOMPONENTA*);
 void* searchCijena(KOMPONENTA*);
 void subZaSortSil(KOMPONENTA*, KOMPONENTA*);
 void subZaSortUzl(KOMPONENTA*, KOMPONENTA*);
@@ -28,5 +29,4 @@ void brisanjeKomponente(KOMPONENTA*);
 void izlaz(KOMPONENTA*);
 
 #endif //HEADER_H
-
 
