@@ -94,7 +94,7 @@ int menu()
 	return izbor;
 }
 
-//21 pretraživanje – pokusati koristiti ugrađenu bsearch() funkciju
+//21 pretrazivanje – pokusati koristiti ugrađenu bsearch() funkciju
 int menuSearch()
 {
 	int izbor = 0;
@@ -104,9 +104,9 @@ int menuSearch()
 	printf("\nPretrazivanje po:\n\n");
 	printf("\t 1. ID-u\n");
 	printf("----------------------------------------------------------------------------------\n");
-	printf("\t 2. Imenu tvrtke\n");
+	printf("\t 2. Imenu tvrtke/marke\n");
 	printf("----------------------------------------------------------------------------------\n");
-	printf("\t 3. Imenu proizvoda\n");
+	printf("\t 3. Imenu komponente\n");
 	printf("----------------------------------------------------------------------------------\n");
 	printf("\t 4. Cijeni\n");
 	printf("----------------------------------------------------------------------------------\n");
@@ -213,28 +213,28 @@ void dodavanjeKomponente()
 		perror("Dodavanje");				
 
 	fread(&brojKomponenti, sizeof(int), 1, fp);
-	printf("Trenutni broj proizvoda: %d\n", brojKomponenti);
+	printf("Trenutni broj komponenti: %d\n", brojKomponenti);
 
 	KOMPONENTA komponenta;
 	komponenta.id = brojKomponenti;
 	br++;
 
 	getchar();
-	printf("Unesite ime tvrtke: ");
+	printf("Unesite ime tvrtke/marke: ");
 	scanf("%24[^\n]", komponenta.marka);
 	getchar();
-	printf("Unesite ime proizvoda: ");
+	printf("Unesite ime komponente: ");
 	scanf("%9[^\n]", komponenta.imeKomponente);
 	getchar();
-	printf("Unesite cijenu proizvoda: ");
+	printf("Unesite cijenu komponente: ");
 	scanf("%d", &komponenta.cijena);
 	getchar();
 
-	fseek(fp, sizeof(KOMPONENTA) * brojKomponenti, SEEK_CUR);	//17
+	fseek(fp, sizeof(KOMPONENTA) * brojKomponenti, SEEK_CUR);	
 	fwrite(&komponenta, sizeof(KOMPONENTA), 1, fp);
-	rewind(fp);							//17
+	rewind(fp);							
 	brojKomponenti++;
-	fwrite(&brojKomponenti, sizeof(int), 1, fp);			//17
+	fwrite(&brojKomponenti, sizeof(int), 1, fp);			
 
 	fclose(fp);
 }
@@ -244,7 +244,7 @@ void* ucitavanjeKomponente()
 {
 	FILE* fp = fopen("komponente.bin", "rb");
 	if (fp == NULL) {
-		printf("Niste unijeli niti jedan proizvod.\n");
+		printf("Niste unijeli niti jednu komponentu.\n");
 		return NULL;
 	}
 
@@ -270,7 +270,7 @@ void* ucitavanjeKomponente()
 void ispis(KOMPONENTA* polje)
 {
 	for (i = 0; i < brojKomponenti; i++) {
-		printf("\nID: %d  Ime tvrtke:%s  Ime proizvoda:%s  Cijena: %d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
+		printf("\nID: %d  Ime tvrtke/marke :%s  Ime komponente:%s  Cijena: %d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
 	}
 }
 
@@ -284,7 +284,7 @@ void* searchID(KOMPONENTA* polje)
 	for (i = 0; i < brojKomponenti; i++) {
 		if (trazenaID == (polje + i)->id) {
 
-			printf("\nID: %d  Ime tvrtke : % s  Ime proizvoda : % s  Cijena : % d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
+			printf("\nID: %d  Ime tvrtke/marke : % s  Ime komponente : % s  Cijena : % d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
 			br++;
 		}
 	}
@@ -299,14 +299,14 @@ void* searchMarka(KOMPONENTA* polje)
 	char trazenaMarka[50];
 	int br = 0;
 
-	printf("Upisite ime tvrtke/marku trazenog proizvoda:\n");
+	printf("Upisite ime tvrtke/marku trazene komponente:\n");
 	getchar();
 	scanf("%49[^\n]", trazenaMarka);
 
 	for (i = 0; i < brojKomponenti; i++) {
 		if (!strcmp(trazenaMarka, (polje + i)->marka)) {
 
-			printf("\nID: %d  Ime tvrtke : % s  Ime proizvoda : % s  Cijena : % d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
+			printf("\nID: %d  Ime tvrtke/marke : % s  Ime komponente : % s  Cijena : % d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
 			br++;
 		}
 	}
@@ -317,22 +317,22 @@ void* searchMarka(KOMPONENTA* polje)
 
 
 void* searchImeKomponente(KOMPONENTA* polje) {
-	char trazenProizvod[50];
+	char trazenaKomponenta[50];
 	int br = 0;
 
-	printf("Upisite ime proizvoda kojeg trazite:\n");
+	printf("Upisite ime komponente kojeg trazite:\n");
 	getchar();
-	scanf("%49[^\n]", trazenProizvod);
+	scanf("%49[^\n]", trazenaKomponenta);
 
 	for (i = 0; i < brojKomponenti; i++) {
-		if (!strcmp(trazenProizvod, (polje + i)->imeKomponente)) {
+		if (!strcmp(trazenaKomponenta, (polje + i)->imeKomponente)) {
 
-			printf("\nID: %d  Ime tvrtke : % s  Ime proizvoda : % s  Cijena : % d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
+			printf("\nID: %d  Ime tvrtke/marke : % s  Ime komponente : % s  Cijena : % d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
 			br++;
 		}
 	}
 	if (br == 0)
-		printf("\nTrazen proizvod nije pronadjen.\n");
+		printf("\nTrazena komponenta nije pronadjen.\n");
 	return NULL;
 }
 
@@ -346,7 +346,7 @@ void* searchCijena(KOMPONENTA* polje) {
 	for (i = 0; i < brojKomponenti; i++) {
 		if (trazenaCijena == (polje + i)->cijena) {
 
-			printf("\nID: %d  Ime tvrtke : % s  Ime proizvoda : % s  Cijena : % d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
+			printf("\nID: %d  Ime tvrtke/marke : % s  Ime komponenta : % s  Cijena : % d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
 
 			br++;
 		}
@@ -383,7 +383,7 @@ void selectionSortCijenaUzl(KOMPONENTA* polje) {
 		}
 	}
 	for (i = 0; i < brojKomponenti; i++) {
-		printf("\nID: %d Ime tvrtke:%s  Ime proizvoda:%s  Cijena: %d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
+		printf("\nID: %d Ime tvrtke/marke :%s  Ime komponenta:%s  Cijena: %d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
 	}
 	printf("\n");
 }
@@ -397,7 +397,7 @@ void selectionSortCijenaSil(KOMPONENTA* polje) {
 		}
 	}
 	for (i = 0; i < brojKomponenti; i++) {
-		printf("\nID: %d Ime tvrtke:%s  Ime proizvoda:%s  Cijena: %d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
+		printf("\nID: %d Ime tvrtke/marke :%s  Ime komponenta:%s  Cijena: %d\n", (polje + i)->id, (polje + i)->marka, (polje + i)->imeKomponente, (polje + i)->cijena);
 	}
 	printf("\n");
 }
