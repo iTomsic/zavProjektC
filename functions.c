@@ -4,17 +4,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-//9 generalna upotreba pokazivaca gdje su potrebni (implementirano u funk)
-//10 generalna upotreba struktura i funckija (implementirano u funk)
-//19 u funckijama koristi se perror (implementirano u funk)
+//11 zaštita parametara kod svih funkcija 
 
 
-static int brojKomponenti = 0, i, j, br = 0; //5
+//1 odabir konkretnih primitivnih tipova podataka za rad s cjelobrojnim i realnim konstantama
+//5 primjena kljucne rijeci static za globalne i lokalne varijable
+static int brojKomponenti = 0, i, j, br = 0; 
 
-//8
+//8 izbornik/podizbornici
 int menu()
 {
 	int izbor = 0;
+	
+	//9 Generalno upotreba pokazivaca tamo gdje su potrebni
 	static KOMPONENTA* polje = NULL;
 
 	printf("\nIzaberite opciju:\n\n");
@@ -46,11 +48,13 @@ int menu()
 		break;
 
 	case 2:
-
+		
+		//15 Sigurno brisanje memorije koja je dinamicki zauzeta...
 		if (polje != NULL) {
-			free(polje);		//15
-			polje = NULL;		//15
+			free(polje);		
+			polje = NULL;
 		}
+			
 		polje = (KOMPONENTA*)ucitavanjeKomponente();
 		ispis(polje);
 		break;
@@ -91,7 +95,7 @@ int menu()
 	return izbor;
 }
 
-//8,21
+//21 pretraživanje – pokusati koristiti ugrađenu bsearch() funkciju
 int menuSearch()
 {
 	int izbor = 0;
@@ -144,11 +148,11 @@ int menuSearch()
 	return izbor;
 }
 
-//8,20
+//20 sortiranje – pokusati koristiti ugrađenu qsort() funkciju
 int menuSort()
 {
 	int izbor = 0;
-	KOMPONENTA* polje = NULL;						//13
+	KOMPONENTA* polje = NULL;					
 	polje = (KOMPONENTA*)ucitavanjeKomponente();
 
 	printf("\nSortiranje po:\n\n");
@@ -184,27 +188,30 @@ int menuSort()
 	return izbor;
 }
 
-//16
+//16 datoteke, koristiti tekstualnu ili binarnu, provjera pokazivaca i zatvaranje datoteke
 void kreiranjeDat()
 {
 	FILE* fp = NULL;
 	fp = fopen("komponente.bin", "wb");
+	
+	//19 upravljati s pogreskama, errno, perror(), strerror(), feof(), ferror() – neku od njih ako ne sve
 	if (fp == NULL) {
-		perror("Kreiranje"); 				//19
+		perror("Kreiranje"); 				
 	}
-
-	fwrite(&brojKomponenti, sizeof(int), 1, fp);		//17
+	
+	//17 koristiti funkcije fseek(), ftell(), rewind(), ovisno o potrebi – neku od njih ako ne sve
+	fwrite(&brojKomponenti, sizeof(int), 1, fp);		
 
 	fclose(fp);
 }
 
-//16,17
+
 void dodavanjeKomponente()
 {
 	FILE* fp = NULL;
 	fp = fopen("komponente.bin", "rb+");
 	if (fp == NULL)
-		perror("Dodavanje");				//19
+		perror("Dodavanje");				
 
 	fread(&brojKomponenti, sizeof(int), 1, fp);
 	printf("Trenutni broj proizvoda: %d\n", brojKomponenti);
@@ -233,7 +240,7 @@ void dodavanjeKomponente()
 	fclose(fp);
 }
 
-//13,14,16
+
 void* ucitavanjeKomponente()
 {
 	FILE* fp = fopen("komponente.bin", "rb");
@@ -243,10 +250,13 @@ void* ucitavanjeKomponente()
 	}
 
 	fread(&brojKomponenti, sizeof(int), 1, fp);
+	
+	//13 koristiti dinamicko zauzimanje memorije za bilo koji tip podatka...
+	//14 koristiti funkcije malloc(), calloc(), realloc(), free() – neku od njih, ako ne i sve
 	KOMPONENTA* polje = NULL;
-	polje = (KOMPONENTA*)calloc(brojKomponenti, sizeof(KOMPONENTA));	//13
+	polje = (KOMPONENTA*)calloc(brojKomponenti, sizeof(KOMPONENTA));	
 	if (polje == NULL) {
-		perror("Zauzimanje memorije");			//19
+		perror("Zauzimanje memorije");			
 		return NULL;
 	}
 
@@ -257,6 +267,7 @@ void* ucitavanjeKomponente()
 	return polje;
 }
 
+//10 generalna upotreba struktura i funckija (u ovom slucaju ispis iz strukture)
 void ispis(KOMPONENTA* polje)
 {
 	for (i = 0; i < brojKomponenti; i++) {
@@ -283,7 +294,7 @@ void* searchID(KOMPONENTA* polje)
 	return NULL;
 }
 
-//21
+
 void* searchMarka(KOMPONENTA* polje)
 {
 	char trazenaMarka[50];
@@ -305,7 +316,7 @@ void* searchMarka(KOMPONENTA* polje)
 	return NULL;
 }
 
-//21
+
 void* searchImeKomponente(KOMPONENTA* polje) {
 	char trazenProizvod[50];
 	int br = 0;
@@ -326,7 +337,7 @@ void* searchImeKomponente(KOMPONENTA* polje) {
 	return NULL;
 }
 
-//21
+
 void* searchCijena(KOMPONENTA* polje) {
 	int trazenaCijena, br = 0;
 
@@ -346,7 +357,7 @@ void* searchCijena(KOMPONENTA* polje) {
 	return NULL;
 }
 
-//20
+
 void subZaSortSil(KOMPONENTA* veci, KOMPONENTA* manji)
 {
 	KOMPONENTA temp = { 0 };
@@ -355,7 +366,7 @@ void subZaSortSil(KOMPONENTA* veci, KOMPONENTA* manji)
 	*manji = temp;
 }
 
-//20
+
 void subZaSortUzl(KOMPONENTA* manji, KOMPONENTA* veci)
 {
 	KOMPONENTA temp = { 0 };
@@ -392,7 +403,7 @@ void selectionSortCijenaSil(KOMPONENTA* polje) {
 	printf("\n");
 }
 
-//16
+
 void brisanjeKomponente(KOMPONENTA* polje)
 {
 	FILE* fp = NULL;
@@ -401,8 +412,8 @@ void brisanjeKomponente(KOMPONENTA* polje)
 		perror("Brisanje");
 	}
 
-	rewind(fp);										//17
-	fseek(fp, sizeof(int), SEEK_CUR);				//17
+	rewind(fp);									
+	fseek(fp, sizeof(int), SEEK_CUR);			
 
 	int idZaBrisanje, br = 0;
 
@@ -427,12 +438,17 @@ void izlaz(KOMPONENTA* polje)
 	printf("Zelite li pri izlasku izbrisati datoteku ili je zadrzati?\n");
 	printf("Ukoliko zelite izbrisati datoteku napisite 'OBRISI'\n\n");
 
-	char uvjet[7] = { '\0' }; //12
+	//12 koristiti staticki zauzeta polja
+	char uvjet[7] = { '\0' }; 
 	scanf("%6s", uvjet);
+	
+	//18. Koristiti funkcije remove(), rename(), po potrebi implementirati funkciju za kopiranje datoteka.
 	if (!strcmp("OBRISI", uvjet)) {
-		remove("komponente.bin") == 0 ? printf("\nDatoteka komponente.bin uspjesno izbrisana.\n") : printf("\nDatoteka neuspjesno izbrisana ili ne postoji.\n");	//18
+	
+		remove("komponente.bin") == 0 ? printf("\nDatoteka komponente.bin uspjesno izbrisana.\n") : printf("\nDatoteka neuspjesno izbrisana ili ne postoji.\n");	
 		printf("\n\nIzlaz iz programa.\n");
 		free(polje);
+		
 	}
 	else
 	{
