@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//4 sve je u camelCase
-//6 organizirano u vise datoteka
+//4 imenovanje identifikatora (varijabli, konstanti, polja, funkcija, pokazivača…) – upotreba camelCase, PascalCase i snake_case konzistento kroz cijeli projekt (u ovom slucaju CamelCase)
+//6 organizacija izvornog kôda (nalazi se u vise datoteka, formatiranje je konzistentno...)
 
 int main()
 {
