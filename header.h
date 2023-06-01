@@ -2,7 +2,8 @@
 #define HEADER_H
 
 
-//3
+//3 primjena typedef sa strukturama i unijama, po potrebi s enum tipovima podataka tamo gdje treba (u ovom slucaju KOMPONENTA)
+//2 odabir konkretnih složenih tipova podataka za rad sa specifičnim objektima (u ovom slucaju KOMPONENTA)
 typedef struct komp {
 	int id;
 	int cijena;
