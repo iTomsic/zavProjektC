@@ -99,7 +99,7 @@ int menuSearch()
 {
 	int izbor = 0;
 	KOMPONENTA* polje = NULL;
-	polje = (KOMPONENTA*)ucitavanjeKomponente();	//13
+	polje = (KOMPONENTA*)ucitavanjeKomponente();	
 
 	printf("\nPretrazivanje po:\n\n");
 	printf("\t 1. ID-u\n");
