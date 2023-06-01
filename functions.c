@@ -4,8 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-//11 zaštita parametara kod svih funkcija 
-
+//11 zastita parametara kod svih funkcija (funkcije su sigurne)
 
 //1 odabir konkretnih primitivnih tipova podataka za rad s cjelobrojnim i realnim konstantama
 //5 primjena kljucne rijeci static za globalne i lokalne varijable
