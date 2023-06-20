@@ -447,11 +447,13 @@ void izlaz(KOMPONENTA* polje)
 		remove("komponente.bin") == 0 ? printf("\nDatoteka komponente.bin uspjesno izbrisana.\n") : printf("\nDatoteka neuspjesno izbrisana ili ne postoji.\n");	
 		printf("\n\nIzlaz iz programa.\n");
 		free(polje);
+		polje = NULL;
 		
 	}
 	else
 	{
 		free(polje);
+		polje = NULL;
 		printf("\nZadrzali ste datoteku.\n\nIzlaz iz programa.\n");
 	}
 
